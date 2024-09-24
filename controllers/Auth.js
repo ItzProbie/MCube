@@ -240,7 +240,7 @@ exports.generateResetPasswordToken = async(req,res) => {
       });
 
       //#TODO change this to the frontendlink
-      const url = `http://localhost:4000/update-password/${token}`;
+      const url = `http://localhost:3000/update-password/${token}`;
 
       await mailSender(
           email , 
@@ -331,7 +331,7 @@ exports.signUp = async(req,res) => {
             recaptchaValue
           } = req.body
 
-          console.log(recaptchaValue);
+          // console.log(recaptchaValue);
           
 
         if (
@@ -399,7 +399,7 @@ exports.signUp = async(req,res) => {
           //  image: `https://api.dicebear.com/5.x/initials/svg?seed=${userName}`,
          })
     
-
+         user.password = undefined;
 
          return res.status(200).json({
            success: true,

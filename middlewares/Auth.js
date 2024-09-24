@@ -86,6 +86,8 @@ exports.checkImageUploadLimits = async (req, res, next) => {
         const redisKey = `upload_count:${user._id}`;
         const exists = await redisClient.exists(redisKey);
 
+        
+
         if(!exists) {
           
             await redisClient.set(redisKey, 1, 'EX', 7200); // 7200 seconds = 2 hours
@@ -96,7 +98,7 @@ exports.checkImageUploadLimits = async (req, res, next) => {
             const ttl = await redisClient.ttl(redisKey);
 
             // If the user has reached the upload limit, deny further uploads
-            if (uploadCount >= 10) {
+            if (uploadCount >= 20) {
                 return res.status(403).json({
                     success: false,
                     message: "Upload limit reached. You cannot upload more images.",
