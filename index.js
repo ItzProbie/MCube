@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const path = require("path");
 
 app.use(express.urlencoded({ extended: true }));
 require("dotenv").config();
@@ -28,7 +29,11 @@ app.use('/api/v1/media' , mediaRoutes);
 app.use('/api/v1/auth' , userRoutes);
 app.use('/api/v1/payment' , paymentRoutes);
 
-
+//prod script
+app.use(express.static("./mutaengine/dist"));
+app.get("*" , (req , res) => {
+    res.sendFile(path.resolve(__dirname , "mutaengine" , "dist" , "index.html"))
+})
 
 app.listen(PORT , () => {
     console.log(`App started @ Port ${PORT}`);    
